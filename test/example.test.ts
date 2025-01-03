@@ -1,8 +1,22 @@
-import { expect, test } from 'vitest'
+import { test, beforeAll, afterAll } from 'vitest'
+import request from 'supertest'
+import { app } from '../src/app'
 
-test('O usuário consegue criar uma nova transação', () => {
-  // método
-  const responseStatusCode = 201
+beforeAll(async () => {
+  await app.ready()
+})
 
-  expect(responseStatusCode).toEqual(201) // etapa de validação onde eu pego o valor de "responseStatusCode" e verifico se ele é igual a "201"
-}) // o primeiro param eu passo o nome do teste (o "enunciado"); e no segundo param eu passo o método de execução desse teste (a "operação"), que dentro dela eu faço também a "validação"
+afterAll(async () => {
+  await app.close()
+})
+
+test('User can create a new transaction', async () => {
+  await request(app.server)
+    .post('/transactions')
+    .send({
+      title: 'New transaction',
+      amount: 5000,
+      type: 'credit',
+    })
+    .expect(201)
+})
