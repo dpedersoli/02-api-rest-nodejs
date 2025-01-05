@@ -10,8 +10,8 @@
     "dev": "tsx watch src/server.ts",
     "knex": "node --no-warnings --import tsx ./node_modules/knex/bin/cli.js",
     "lint": "eslint src --ext .ts --fix",
-    "build": "tsup src -d build",
-    "prestart": "chmod +x node_modules/.bin/tsup-node",
+    "prebuild": "chmod +x node_modules/.bin/tsup",
+    "build": "tsup src --out-dir build",
     "test": "vitest"
   },
   "keywords": [],
